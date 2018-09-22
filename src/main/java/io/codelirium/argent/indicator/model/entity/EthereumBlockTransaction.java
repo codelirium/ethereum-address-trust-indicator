@@ -33,8 +33,28 @@ public class EthereumBlockTransaction extends PersistableBaseEntity<Long> implem
 	@Column(name = "DESTINATION_ADDRESS", nullable = false)
 	private String destinationAddress;
 
+	@Column(name = "IS_SOURCE_CONTRACT", nullable = false)
+	private Boolean isSourceAddressContract;
+
+	@Column(name = "IS_DESTINATION_CONTRACT", nullable = false)
+	private Boolean isDestinationAddressContract;
+
 
 	public EthereumBlockTransaction() { }
+
+	public EthereumBlockTransaction(final Long blockId,
+									final String sourceAddress,
+									final String destinationAddress,
+									final Boolean isSourceAddressContract,
+									final Boolean isDestinationAddressContract) {
+
+		this.blockId = blockId;
+		this.sourceAddress = sourceAddress;
+		this.destinationAddress = destinationAddress;
+		this.isSourceAddressContract = isSourceAddressContract;
+		this.isDestinationAddressContract = isDestinationAddressContract;
+
+	}
 
 
 	public Long getBlockId() {
@@ -73,17 +93,28 @@ public class EthereumBlockTransaction extends PersistableBaseEntity<Long> implem
 
 	}
 
+	public Boolean getSourceAddressContract() {
 
-	public static EthereumBlockTransaction create(final Long blockId, final String sourceAddress, final String destinationAddress) {
+		return isSourceAddressContract;
 
-		final EthereumBlockTransaction ethereumBlockTransaction = new EthereumBlockTransaction();
+	}
 
-		ethereumBlockTransaction.setBlockId(blockId);
-		ethereumBlockTransaction.setSourceAddress(sourceAddress);
-		ethereumBlockTransaction.setDestinationAddress(destinationAddress);
+	public void setSourceAddressContract(final Boolean sourceAddressContract) {
 
+		isSourceAddressContract = sourceAddressContract;
 
-		return  ethereumBlockTransaction;
+	}
+
+	public Boolean getDestinationAddressContract() {
+
+		return isDestinationAddressContract;
+
+	}
+
+	public void setDestinationAddressContract(final Boolean destinationAddressContract) {
+
+		isDestinationAddressContract = destinationAddressContract;
+
 	}
 
 

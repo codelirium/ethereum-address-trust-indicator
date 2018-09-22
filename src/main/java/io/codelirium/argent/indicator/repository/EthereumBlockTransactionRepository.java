@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,5 +22,5 @@ public interface EthereumBlockTransactionRepository extends JpaRepository<Ethere
 	List<EthereumBlockTransaction> findByDestinationAddress(@NotNull final String destinationAddress);
 
 	@Query(value = "SELECT MAX(BLOCK_ID) FROM ETHEREUM_BLOCK_TRANSACTION", nativeQuery = true)
-	Optional<Long> findLastProcessedBlockId();
+	Optional<BigInteger> findLastProcessedBlockId();
 }
