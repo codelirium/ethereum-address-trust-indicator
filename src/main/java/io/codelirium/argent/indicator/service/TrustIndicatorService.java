@@ -129,8 +129,8 @@ public class TrustIndicatorService {
 												$.blockId = blockNumber.longValue();
 												$.sourceAddress = isNull(sourceAddress) ? "" : sourceAddress;
 												$.destinationAddress = isNull(destinationAddress) ? "" : destinationAddress;
-												$.isSourceAddressContract = isNull(sourceAddress) ? null : isContract(sourceAddress, blockNumber);
-												$.isDestinationAddressContract = isNull(destinationAddress) ? null : isContract(destinationAddress, blockNumber);
+												$.isSourceAddressContract = isNull(sourceAddress) ? Boolean.FALSE : isContract(sourceAddress, blockNumber);
+												$.isDestinationAddressContract = isNull(destinationAddress) ? Boolean.FALSE : isContract(destinationAddress, blockNumber);
 											})
 											.build();
 
