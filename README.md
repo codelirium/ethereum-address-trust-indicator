@@ -1,1 +1,0 @@
-# ethereum-address-trust-indicator
