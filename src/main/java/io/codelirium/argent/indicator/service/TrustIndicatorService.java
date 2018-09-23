@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import org.springframework.util.StopWatch;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
@@ -22,6 +21,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.concurrent.CountDownLatch;
 
+import static java.lang.Boolean.FALSE;
 import static java.util.Objects.isNull;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.springframework.util.Assert.notNull;
@@ -101,7 +101,7 @@ public class TrustIndicatorService {
 	@Async
 	private void persistBlockTransactionDetails(final Block block) {
 
-		Assert.notNull(block, "The block cannot be null.");
+		notNull(block, "The block cannot be null.");
 
 
 		final BigInteger blockNumber = block.getNumber();
@@ -129,8 +129,8 @@ public class TrustIndicatorService {
 												$.blockId = blockNumber.longValue();
 												$.sourceAddress = isNull(sourceAddress) ? "" : sourceAddress;
 												$.destinationAddress = isNull(destinationAddress) ? "" : destinationAddress;
-												$.isSourceAddressContract = isNull(sourceAddress) ? Boolean.FALSE : isContract(sourceAddress, blockNumber);
-												$.isDestinationAddressContract = isNull(destinationAddress) ? Boolean.FALSE : isContract(destinationAddress, blockNumber);
+												$.isSourceAddressContract = isNull(sourceAddress) ? FALSE : isContract(sourceAddress, blockNumber);
+												$.isDestinationAddressContract = isNull(destinationAddress) ? FALSE : isContract(destinationAddress, blockNumber);
 											})
 											.build();
 
@@ -141,6 +141,10 @@ public class TrustIndicatorService {
 
 
 	private boolean isContract(final String address, final BigInteger blockId) {
+
+		notNull(address, "The address cannot be null.");
+		notNull(blockId, "The block id cannot be null.");
+
 
 		EthGetCode ethGetCode;
 
