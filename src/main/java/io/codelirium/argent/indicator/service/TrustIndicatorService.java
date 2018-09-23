@@ -64,9 +64,6 @@ public class TrustIndicatorService {
 		notNull(destinationAddress, "The destination address cannot be null.");
 
 
-		indexEthereumTransactionUniverse();
-
-
 		// TODO ...
 
 
@@ -75,7 +72,7 @@ public class TrustIndicatorService {
 
 
 	@Async
-	private void indexEthereumTransactionUniverse() throws InterruptedException {
+	public void indexEthereumTransactionUniverse() throws InterruptedException {
 
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
@@ -142,7 +139,6 @@ public class TrustIndicatorService {
 
 						ethereumBlockTransactionRepository.save(ethereumBlockTransaction);
 				});
-
 	}
 
 

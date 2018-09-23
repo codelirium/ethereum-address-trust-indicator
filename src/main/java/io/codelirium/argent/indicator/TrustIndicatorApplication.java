@@ -39,40 +39,54 @@ public class TrustIndicatorApplication implements CommandLineRunner {
 	@Override
 	public void run(final String... args) throws Exception {
 
-		if (isNull(args) || args.length != 2) {
+		if (args.length > 0 && args[0].equals("--sync-eth-blocks")) {
 
-			LOGGER.error("Please supply two ethereum addresses as parameters to this application.");
+			trustIndicatorService.indexEthereumTransactionUniverse();
+
 
 			return;
 		}
 
 
-		final String sourceAddress = args[0];
+		if (args.length > 0 && args[0].equals("--trust-score") && !isNull(args[1]) && !isNull(args[2])) {
 
-		final String destinationAddress = args[1];
+			final String sourceAddress = args[1];
+
+			final String destinationAddress = args[2];
 
 
-		if (!isValidEthereumAddress(sourceAddress)) {
+			if (!isValidEthereumAddress(sourceAddress)) {
 
-			LOGGER.error("The first ethereum address is incorrect.");
+				LOGGER.error("The source ethereum address is incorrect.");
+
+
+				return;
+			}
+
+
+			if (!isValidEthereumAddress(destinationAddress)) {
+
+				LOGGER.error("The destination ethereum address is incorrect.");
+
+
+				return;
+			}
+
+
+			LOGGER.debug("Calculating the trust score for [" + sourceAddress + "] -> [" + destinationAddress + "] ...");
+
+			final int trustScore = trustIndicatorService.getTrustScore(sourceAddress, destinationAddress);
+
+			LOGGER.debug("The trust score is: " + trustScore);
+
 
 			return;
 		}
 
 
-		if (!isValidEthereumAddress(destinationAddress)) {
-
-			LOGGER.error("The second ethereum address is incorrect.");
-
-			return;
-		}
-
-
-		LOGGER.debug("Calculating the trust score for [" + sourceAddress + "] -> [" + destinationAddress + "] ...");
-
-		final int trustScore = trustIndicatorService.getTrustScore(sourceAddress, destinationAddress);
-
-		LOGGER.debug("The trust score is: " + trustScore);
+		System.out.println("\nUsage: java -jar target/indicator-0.0.1-SNAPSHOT.jar [cmd] {<arg>} {<arg>}\n");
+		System.out.println("--sync-eth-blocks                                     process ethereum blocks.");
+		System.out.println("--trust-score <source-address> <destination-address>  calculate trust score between two ethereum addresses.\n");
 	}
 
 
