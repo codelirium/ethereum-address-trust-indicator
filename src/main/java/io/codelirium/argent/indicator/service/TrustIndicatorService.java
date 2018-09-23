@@ -34,14 +34,20 @@ public class TrustIndicatorService {
 	private static final Logger LOGGER = getLogger(TrustIndicatorService.class);
 
 
-	@Inject
 	private EthereumBlockTransactionRepository ethereumBlockTransactionRepository;
-
 
 	@Value("${ethereum.node}")
 	private String ethereumNode;
 
 	private Web3j web3;
+
+
+	@Inject
+	public TrustIndicatorService(final EthereumBlockTransactionRepository ethereumBlockTransactionRepository) {
+
+		this.ethereumBlockTransactionRepository = ethereumBlockTransactionRepository;
+
+	}
 
 
 	@PostConstruct
