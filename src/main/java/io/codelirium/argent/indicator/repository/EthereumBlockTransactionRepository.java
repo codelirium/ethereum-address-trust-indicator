@@ -15,11 +15,7 @@ import java.util.Optional;
 @Transactional
 public interface EthereumBlockTransactionRepository extends JpaRepository<EthereumBlockTransaction, Long> {
 
-	List<EthereumBlockTransaction> findByBlockId(@NotNull final Long blockId);
-
 	List<EthereumBlockTransaction> findBySourceAddress(@NotNull final String sourceAddress);
-
-	List<EthereumBlockTransaction> findByDestinationAddress(@NotNull final String destinationAddress);
 
 	@Query(value = "SELECT MAX(BLOCK_ID) FROM ETHEREUM_BLOCK_TRANSACTION", nativeQuery = true)
 	Optional<BigInteger> findLastProcessedBlockId();
